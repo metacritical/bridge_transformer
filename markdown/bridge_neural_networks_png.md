@@ -82,6 +82,8 @@ These components work together to create a seamless flow from language generatio
 
 *Figure 1: Bridge Neural Network Architecture showing the base transformer model with bridge neurons and external knowledge service connections.*
 
+\clearpage
+
 ### 3.2 Bridge Detector Neurons
 
 The bridge detector mechanism is the core innovation of our approach. We repurpose a small subset (typically 3-5%) of neurons in specific transformer layers to serve as bridge detectors.
@@ -136,6 +138,8 @@ This direct neural integration differs fundamentally from RAG approaches that in
 ![Information Flow Comparison](figures/png/figure2_information_flow_comparison.png)
 
 *Figure 2: Comparison of information flow in traditional RAG (left) versus Bridge Neural Networks (right). The key differences are context pollution vs. neural pathways, constant retrieval vs. selective activation, and text injection vs. neural integration.*
+
+\clearpage
 
 ## 4. Mathematical Framework
 
@@ -216,6 +220,8 @@ Our initial experiments suggest that $\alpha\beta/\lambda \approx 1.05$, yieldin
 
 *Figure 3: Mathematical Framework for Bridge Neural Networks, showing modified transformer equations, bridge activation functions, information theoretic perspective, and capacity analysis.*
 
+\clearpage
+
 ## 5. Training Methodology
 
 ### 5.1 Multi-Phase Training Curriculum
@@ -258,6 +264,8 @@ $$W' = W + \Delta W = W + A \cdot B$$
 
 where $A \in \mathbb{R}^{d \times r}$ and $B \in \mathbb{R}^{r \times d}$ with rank $r \ll d$. This approach significantly reduces the number of trainable parameters while allowing effective adaptation.
 
+\clearpage
+
 ### 5.4 Pruning-Guided Bridge Allocation
 
 Rather than arbitrarily selecting neurons for bridge functionality, Pruning-Guided Bridge Allocation (PGBA) uses network pruning techniques to identify neurons that can be repurposed with minimal impact on the model's core capabilities.
@@ -285,6 +293,8 @@ The mathematical formulation for PGBA involves:
 4. **Bridge Allocation**: Repurpose neurons with $\Delta P < \epsilon$ as bridge neurons.
 
 This approach guarantees that bridge functionality is added with minimal disruption to the model's core capabilities, as it utilizes neural pathways that are demonstrably less critical to the original task.
+
+\clearpage
 
 ## 6. Evaluation Framework
 
@@ -351,6 +361,8 @@ The external knowledge service can be implemented using:
 
 The modular design allows for flexibility in knowledge source selection based on the application domain.
 
+\clearpage
+
 ### 7.3 Inference Optimization
 
 During inference, several optimizations can be applied:
@@ -399,6 +411,8 @@ Extending the approach to connect language models with visual, audio, and other 
 
 #### 9.2.4 Hierarchical Knowledge Integration
 Developing bridge mechanisms that operate at different levels of abstraction and time scales would enable more sophisticated knowledge integration. This could involve tiered bridge systems that handle different types of knowledge needs, from factual recall to complex reasoning support.
+
+\clearpage
 
 ## 10. Conclusion
 

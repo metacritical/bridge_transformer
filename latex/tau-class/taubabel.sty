@@ -1,0 +1,64 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------------------------------------------------------
+% Tau Babel
+% LaTeX Style
+% Version 2.4.4 (28/02/2025)
+%
+% Author: 
+% Guillermo Jimenez (memo.notess1@gmail.com)
+% 
+% License:
+% Creative Commons CC BY 4.0
+% --------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tau-class/taubabel}[2025/02/28 tau babel v2.4.4]
+
+% --------------------------------------------------------
+% Required packages
+% --------------------------------------------------------
+
+\RequirePackage{ifthen}
+
+% --------------------------------------------------------
+% Language detection
+% --------------------------------------------------------
+
+\newif\ifspanish
+\def\spanishfalse{\global\let\ifspanish\iffalse}
+\def\spanishtrue{\global\let\ifspanish\iftrue}
+
+% Default language is English
+\spanishfalse
+
+% Check for Spanish language
+\@ifpackagewith{babel}{spanish}
+  {\spanishtrue}
+  {\spanishfalse}
+
+% --------------------------------------------------------
+% Multilingual environments
+% --------------------------------------------------------
+
+% Redefine tauenvname to support multiple languages
+\renewcommand{\tauenvname}[1]{%
+    \ifspanish
+        \ifthenelse{\equal{#1}{Note}}{\textbf{Nota}}{%
+        \ifthenelse{\equal{#1}{Information}}{\textbf{Información}}{\textbf{#1}}%
+        }%
+    \else
+        \textbf{#1}%
+    \fi
+}
+
+% Redefine keywordname to support multiple languages
+\renewcommand\keywordname{%
+    \ifspanish
+        \textbf{Palabras clave}%
+    \else
+        \textbf{Keywords}%
+    \fi
+}
+
+\endinput

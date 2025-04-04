@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600">
+  <!-- Background -->
+  <rect width="900" height="600" fill="#f8f9fa" />
+  
+  <!-- Title -->
+  <text x="450" y="40" font-family="Arial" font-size="24" text-anchor="middle" font-weight="bold">Information Flow Comparison</text>
+  
+  <!-- Left Side: Traditional RAG -->
+  <rect x="50" y="70" width="350" height="480" rx="10" ry="10" fill="#f0f0f0" stroke="#6c757d" stroke-width="2" />
+  <text x="225" y="100" font-family="Arial" font-size="20" text-anchor="middle" font-weight="bold">Traditional RAG</text>
+  
+  <!-- Right Side: Bridge Neural Network -->
+  <rect x="500" y="70" width="350" height="480" rx="10" ry="10" fill="#f0f0f0" stroke="#6c757d" stroke-width="2" />
+  <text x="675" y="100" font-family="Arial" font-size="20" text-anchor="middle" font-weight="bold">Bridge Neural Network</text>
+  
+  <!-- Traditional RAG Components -->
+  
+  <!-- Input for RAG -->
+  <rect x="100" y="130" width="250" height="40" rx="5" ry="5" fill="#e6f2ff" stroke="#0066cc" stroke-width="1" />
+  <text x="225" y="155" font-family="Arial" font-size="14" text-anchor="middle">User Query</text>
+  
+  <!-- Retrieval System -->
+  <rect x="100" y="200" width="250" height="50" rx="5" ry="5" fill="#f8d7da" stroke="#dc3545" stroke-width="1" />
+  <text x="225" y="230" font-family="Arial" font-size="14" text-anchor="middle">External Retrieval System</text>
+  
+  <!-- Retrieved Documents -->
+  <rect x="100" y="280" width="250" height="80" rx="5" ry="5" fill="#fff3cd" stroke="#ffc107" stroke-width="1" />
+  <text x="225" y="310" font-family="Arial" font-size="14" text-anchor="middle">Retrieved Documents</text>
+  <text x="225" y="330" font-family="Arial" font-size="12" text-anchor="middle" font-style="italic">(Consuming Context Window Tokens)</text>
+  <text x="225" y="350" font-family="Arial" font-size="12" text-anchor="middle" fill="#dc3545">Context Pollution</text>
+  
+  <!-- LLM for RAG -->
+  <rect x="100" y="390" width="250" height="80" rx="5" ry="5" fill="#d1e7dd" stroke="#198754" stroke-width="1" />
+  <text x="225" y="425" font-family="Arial" font-size="14" text-anchor="middle">Language Model</text>
+  <text x="225" y="445" font-family="Arial" font-size="12" text-anchor="middle">(Limited Context Space for Reasoning)</text>
+  
+  <!-- Output for RAG -->
+  <rect x="100" y="500" width="250" height="40" rx="5" ry="5" fill="#cff4fc" stroke="#0dcaf0" stroke-width="1" />
+  <text x="225" y="525" font-family="Arial" font-size="14" text-anchor="middle">Generated Response</text>
+  
+  <!-- Arrows for RAG -->
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#6c757d" />
+    </marker>
+  </defs>
+  
+  <line x1="225" y1="170" x2="225" y2="200" stroke="#6c757d" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="225" y1="250" x2="225" y2="280" stroke="#6c757d" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="225" y1="360" x2="225" y2="390" stroke="#6c757d" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="225" y1="470" x2="225" y2="500" stroke="#6c757d" stroke-width="2" marker-end="url(#arrow)" />
+  
+  <!-- Bridge Neural Network Components -->
+  
+  <!-- Input for BNN -->
+  <rect x="550" y="130" width="250" height="40" rx="5" ry="5" fill="#e6f2ff" stroke="#0066cc" stroke-width="1" />
+  <text x="675" y="155" font-family="Arial" font-size="14" text-anchor="middle">User Query</text>
+  
+  <!-- LLM with Bridge for BNN -->
+  <rect x="550" y="200" width="250" height="160" rx="5" ry="5" fill="#d1e7dd" stroke="#198754" stroke-width="1" />
+  <text x="675" y="225" font-family="Arial" font-size="14" text-anchor="middle" font-weight="bold">Language Model</text>
+  <text x="675" y="245" font-family="Arial" font-size="12" text-anchor="middle">(Full Context Space Available)</text>
+  
+  <!-- Bridge Neurons -->
+  <rect x="570" y="260" width="210" height="80" rx="5" ry="5" fill="#28a745" fill-opacity="0.3" stroke="#198754" stroke-width="1" stroke-dasharray="3,3" />
+  <text x="675" y="280" font-family="Arial" font-size="14" text-anchor="middle">Bridge Neurons</text>
+  <text x="675" y="300" font-family="Arial" font-size="12" text-anchor="middle">Neural Knowledge Boundary</text>
+  <text x="675" y="320" font-family="Arial" font-size="12" text-anchor="middle">Detection &amp; Query Generation</text>
+  
+  <!-- External Knowledge Access -->
+  <rect x="630" y="390" width="170" height="40" rx="5" ry="5" fill="#f8d7da" stroke="#dc3545" stroke-width="1" />
+  <text x="715" y="415" font-family="Arial" font-size="14" text-anchor="middle">External Knowledge</text>
+  
+  <!-- Output for BNN -->
+  <rect x="550" y="500" width="250" height="40" rx="5" ry="5" fill="#cff4fc" stroke="#0dcaf0" stroke-width="1" />
+  <text x="675" y="525" font-family="Arial" font-size="14" text-anchor="middle">Generated Response</text>
+  
+  <!-- Neural Integration -->
+  <rect x="550" y="440" width="250" height="40" rx="5" ry="5" fill="#daeeff" stroke="#0d6efd" stroke-width="1" />
+  <text x="675" y="465" font-family="Arial" font-size="14" text-anchor="middle">Direct Neural Integration</text>
+  
+  <!-- Arrows for BNN -->
+  <line x1="675" y1="170" x2="675" y2="200" stroke="#6c757d" stroke-width="2" marker-end="url(#arrow)" />
+  
+  <!-- Special Arrow for Bridge Activation -->
+  <line x1="675" y1="340" x2="675" y2="390" stroke="#198754" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrow)" />
+  <text x="710" y="370" font-family="Arial" font-size="12" text-anchor="middle" fill="#198754" font-style="italic">Selective Activation</text>
+  
+  <line x1="715" y1="430" x2="715" y2="440" stroke="#6c757d" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="675" y1="480" x2="675" y2="500" stroke="#6c757d" stroke-width="2" marker-end="url(#arrow)" />
+  
+  <!-- Integration Arrow back to LLM -->
+  <line x1="550" y1="460" x2="520" y2="460" stroke="#0d6efd" stroke-width="2" marker-end="url(#arrow)" />
+  <line x1="520" y1="460" x2="520" y2="280" stroke="#0d6efd" stroke-width="2" />
+  <line x1="520" y1="280" x2="550" y2="280" stroke="#0d6efd" stroke-width="2" marker-end="url(#arrow)" />
+  <text x="520" y="380" font-family="Arial" font-size="12" text-anchor="end" fill="#0d6efd" transform="rotate(-90, 520, 380)">Hidden State Integration</text>
+  
+  <!-- Key Differences Callout -->
+  <rect x="350" y="230" width="200" height="140" rx="10" ry="10" fill="#fff2cc" stroke="#ff9900" stroke-width="2" />
+  <text x="450" y="250" font-family="Arial" font-size="16" text-anchor="middle" font-weight="bold">Key Differences</text>
+  <text x="360" y="280" font-family="Arial" font-size="12" text-anchor="start">• Context Pollution vs.</text>
+  <text x="375" y="300" font-family="Arial" font-size="12" text-anchor="start">Neural Pathways</text>
+  <text x="360" y="325" font-family="Arial" font-size="12" text-anchor="start">• Constant Retrieval vs.</text>
+  <text x="375" y="345" font-family="Arial" font-size="12" text-anchor="start">Selective Activation</text>
+  <text x="360" y="370" font-family="Arial" font-size="12" text-anchor="start">• Text Injection vs.</text>
+  <text x="375" y="390" font-family="Arial" font-size="12" text-anchor="start">Neural Integration</text>
+</svg>

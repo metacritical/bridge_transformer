@@ -1,0 +1,113 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------------------------------------------------------
+% Tau Environments
+% LaTeX Style
+% Version 2.4.4 (28/02/2025)
+%
+% Author: 
+% Guillermo Jimenez (memo.notess1@gmail.com)
+% 
+% License:
+% Creative Commons CC BY 4.0
+% --------------------------------------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tau-class/tauenvs}[2025/02/28 tau environments v2.4.4]
+
+% --------------------------------------------------------
+% Required packages
+% --------------------------------------------------------
+
+\RequirePackage{tikz}
+\RequirePackage{mdframed}
+\RequirePackage{calc}
+\RequirePackage{xcolor}
+\RequirePackage{etoolbox}
+
+% --------------------------------------------------------
+% Global options
+% --------------------------------------------------------
+
+\def\gettikzpos#1#2{\tikz[baseline,remember picture]{\node[inner xsep=0pt,outer xsep=0pt,anchor=base] (#1) {\vphantom{Ay}};#2}}
+\newcommand{\tauenvname}[1]{{\textbf{#1}}}
+
+% --------------------------------------------------------
+% Colors
+% --------------------------------------------------------
+
+\definecolor{tauenv}{RGB}{230, 230, 230}
+\definecolor{tauinfo}{RGB}{240, 240, 255}
+\definecolor{taunote}{RGB}{255, 250, 240}
+
+% --------------------------------------------------------
+% Custom fonts
+% --------------------------------------------------------
+
+\RequirePackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+
+% --------------------------------------------------------
+% Tau block environment
+% --------------------------------------------------------
+
+% Custom tau environment
+\newenvironment{tauenv}[1][]{%
+\def\frametitletest{#1}%
+\ifx\frametitletest\empty
+    \begin{mdframed}[
+        backgroundcolor=tauenv,
+        skipabove=8pt,
+        skipbelow=8pt,
+        linewidth=0.5pt,
+        roundcorner=4pt,
+    ]
+\else
+    \begin{mdframed}[
+        backgroundcolor=tauenv,
+        skipabove=8pt,
+        skipbelow=8pt,
+        linewidth=0.5pt,
+        roundcorner=4pt,
+        frametitle={\tauenvname{#1}}
+    ]
+\fi
+}{%
+    \end{mdframed}
+}
+
+% --------------------------------------------------------
+% Note environment
+% --------------------------------------------------------
+
+\newenvironment{note}{%
+    \begin{mdframed}[
+        backgroundcolor=taunote,
+        skipabove=8pt,
+        skipbelow=8pt,
+        linewidth=0.5pt,
+        roundcorner=4pt,
+        frametitle={\tauenvname{Note}}
+    ]
+}{%
+    \end{mdframed}
+}
+
+% --------------------------------------------------------
+% Info environment
+% --------------------------------------------------------
+
+\newenvironment{info}{%
+    \begin{mdframed}[
+        backgroundcolor=tauinfo,
+        skipabove=8pt,
+        skipbelow=8pt,
+        linewidth=0.5pt,
+        roundcorner=4pt,
+        frametitle={\tauenvname{Information}}
+    ]
+}{%
+    \end{mdframed}
+}
+
+\endinput

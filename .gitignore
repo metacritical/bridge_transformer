@@ -1,0 +1,16 @@
+# Ignore website directory as it's a separate git repository
+website/
+
+# Ignore generated PNG images
+figures/png/
+
+# Ignore output files
+output/
+
+# Ignore node modules if any were installed
+node_modules/
+
+# Ignore temporary files
+*.tmp
+*~
+.DS_Store

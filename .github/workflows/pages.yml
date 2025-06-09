@@ -13,6 +13,11 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Install dependencies for SVG and PDF conversion
+      run: |
+        sudo apt-get update
+        sudo apt-get install librsvg2-bin pandoc texlive-latex-base texlive-xcolor -y
+
     - name: Install LaTeX packages
       run: |
         sudo apt-get update

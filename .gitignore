@@ -1,5 +1,6 @@
-# Ignore website directory as it's a separate git repository
-website/
+# Website Jekyll cache and generated files
+website/_site/
+website/.jekyll-cache/
 
 # Ignore generated PNG images
 figures/png/

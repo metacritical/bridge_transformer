@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 900 600"
+   version="1.1"
+   id="svg42"
+   sodipodi:docname="figure4_mathematical_framework.svg"
+   inkscape:version="1.4 (e7c3feb1, 2024-10-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview42"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.1733333"
+     inkscape:cx="449.57386"
+     inkscape:cy="368.18182"
+     inkscape:window-width="2560"
+     inkscape:window-height="1387"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg42" />
+  <!-- Background -->
+  <rect
+     width="900"
+     height="600"
+     fill="#f8f9fa"
+     id="rect1" />
+  <!-- Title -->
+  <text
+     x="450"
+     y="40"
+     font-family="Arial"
+     font-size="24"
+     text-anchor="middle"
+     font-weight="bold"
+     id="text1">Mathematical Framework for Bridge Neural Networks</text>
+  <!-- Section 1: Modified Transformer Equations -->
+  <rect
+     x="50"
+     y="80"
+     width="380"
+     height="230"
+     rx="10"
+     ry="10"
+     fill="#e6f2ff"
+     stroke="#0066cc"
+     stroke-width="2"
+     id="rect2" />
+  <text
+     x="240"
+     y="110"
+     font-family="Arial"
+     font-size="18"
+     text-anchor="middle"
+     font-weight="bold"
+     id="text2">Modified Transformer Equations</text>
+  <!-- Equation 1: Standard Transformer -->
+  <text
+     x="278"
+     y="150"
+     font-family="Arial"
+     font-size="16px"
+     text-anchor="middle"
+     id="text3">Standard Transformer Flow:</text>
+  <text
+     x="278"
+     y="180"
+     font-family="Arial"
+     font-size="14px"
+     text-anchor="middle"
+     font-style="italic"
+     id="text4">H^(l+1) = TransformerLayer_l(H^(l))</text>
+  <!-- Equation 2: Bridge Transformer -->
+  <text
+     x="278"
+     y="220"
+     font-family="Arial"
+     font-size="16px"
+     text-anchor="middle"
+     id="text5">Bridge Neural Network Flow:</text>
+  <text
+     x="278"
+     y="250"
+     font-family="Arial"
+     font-size="14px"
+     text-anchor="middle"
+     font-style="italic"
+     id="text6">H^(l+1) = TransformerLayer_l(H^(l)) +</text>
+  <text
+     x="278"
+     y="275"
+     font-family="Arial"
+     font-size="14px"
+     text-anchor="middle"
+     font-style="italic"
+     id="text7">𝟙_{B^(l)} · I(K(Q(a_{B^(l)})))</text>
+  <!-- Section 2: Bridge Activation -->
+  <rect
+     x="450"
+     y="80"
+     width="400"
+     height="230"
+     rx="10"
+     ry="10"
+     fill="#d1e7dd"
+     stroke="#198754"
+     stroke-width="2"
+     id="rect7" />
+  <text
+     x="650"
+     y="110"
+     font-family="Arial"
+     font-size="18"
+     text-anchor="middle"
+     font-weight="bold"
+     id="text8">Bridge Activation Function</text>
+  <!-- Activation Function -->
+  <text
+     x="650"
+     y="132"
+     font-family="Arial"
+     font-size="16px"
+     text-anchor="middle"
+     id="text9">Activation Indicator:</text>
+  <text
+     x="650"
+     y="240"
+     font-family="Arial"
+     font-size="14px"
+     text-anchor="middle"
+     font-style="italic"
+     id="text10">𝟙_{B^(l)} = { 1, if D(a_{B^(l)}) &gt; τ</text>
+  <text
+     x="650"
+     y="257"
+     font-family="Arial"
+     font-size="14px"
+     text-anchor="middle"
+     font-style="italic"
+     id="text11">0, otherwise</text>
+  <!-- Probability Function -->
+  <text
+     x="650"
+     y="277"
+     font-family="Arial"
+     font-size="16px"
+     text-anchor="middle"
+     id="text12">Activation Probability:</text>
+  <text
+     x="650"
+     y="299"
+     font-family="Arial"
+     font-size="14px"
+     text-anchor="middle"
+     font-style="italic"
+     id="text13">P(B^(l) | X) = σ(W_d · a_{B^(l)} + b_d)</text>
+  <!-- Section 3: Information Theory Perspective -->
+  <rect
+     x="50"
+     y="330"
+     width="380"
+     height="230"
+     rx="10"
+     ry="10"
+     fill="#fff3cd"
+     stroke="#ffc107"
+     stroke-width="2"
+     id="rect13" />
+  <text
+     x="240"
+     y="360"
+     font-family="Arial"
+     font-size="18"
+     text-anchor="middle"
+     font-weight="bold"
+     id="text14">Information Theoretic Perspective</text>
+  <!-- Utility Function -->
+  <text
+     x="240"
+     y="384"
+     font-family="Arial"
+     font-size="16px"
+     text-anchor="middle"
+     id="text15">Information Utility Function:</text>
+  <text
+     x="267.27274"
+     y="400.17044"
+     font-family="Arial"
+     font-size="14px"
+     text-anchor="middle"
+     font-style="italic"
+     id="text16">U(X, B, K) = I(Y; X, B, K) - λC(B, K)</text>
+  <!-- Optimization Condition -->
+  <text
+     x="322.67044"
+     y="493.01135"
+     font-family="Arial"
+     font-size="16px"
+     text-anchor="middle"
+     id="text17">Activation Condition:</text>
+  <text
+     x="285.17044"
+     y="512.78412"
+     font-family="Arial"
+     font-size="14px"
+     text-anchor="middle"
+     font-style="italic"
+     id="text18">∇_B U(X, B, K) &gt; 0</text>
+  <!-- Section 4: Capacity Analysis -->
+  <rect
+     x="450"
+     y="330"
+     width="400"
+     height="230"
+     rx="10"
+     ry="10"
+     fill="#f8d7da"
+     stroke="#dc3545"
+     stroke-width="2"
+     id="rect18" />
+  <text
+     x="650"
+     y="360"
+     font-family="Arial"
+     font-size="18"
+     text-anchor="middle"
+     font-weight="bold"
+     id="text19">Capacity Analysis</text>
+  <!-- Bridge Allocation -->
+  <text
+     x="709.98865"
+     y="429.69321"
+     font-family="Arial"
+     font-size="16px"
+     text-anchor="middle"
+     id="text20">Optimal Bridge Allocation:</text>
+  <text
+     x="694.64771"
+     y="455"
+     font-family="Arial"
+     font-size="14px"
+     text-anchor="middle"
+     font-style="italic"
+     id="text21">|B|* = (1/β)((αβ/λ) - 1)</text>
+  <!-- Effective Capacity -->
+  <text
+     x="698.90906"
+     y="487.76135"
+     font-family="Arial"
+     font-size="16px"
+     text-anchor="middle"
+     id="text22">Effective Capacity:</text>
+  <text
+     x="695.5"
+     y="513.5"
+     font-family="Arial"
+     font-size="14px"
+     text-anchor="middle"
+     font-style="italic"
+     id="text23">C_{BNN} = C_P + ∑^L_{l=1} 𝔼[𝟙_{B^(l)}] · C_N</text>
+  <!-- Visual Representation: Standard vs Bridge Flow -->
+  <defs
+     id="defs24">
+    <marker
+       id="arrowhead"
+       markerWidth="10"
+       markerHeight="7"
+       refX="0"
+       refY="3.5"
+       orient="auto">
+      <polygon
+         points="0 0, 10 3.5, 0 7"
+         fill="#6c757d"
+         id="polygon23" />
+    </marker>
+    <marker
+       id="bridge_arrow"
+       markerWidth="10"
+       markerHeight="7"
+       refX="0"
+       refY="3.5"
+       orient="auto">
+      <polygon
+         points="0 0, 10 3.5, 0 7"
+         fill="#198754"
+         id="polygon24" />
+    </marker>
+  </defs>
+  <!-- Standard Flow Representation -->
+  <circle
+     cx="84"
+     cy="160"
+     r="15"
+     fill="#99ccff"
+     stroke="#0066cc"
+     stroke-width="1"
+     id="circle24" />
+  <circle
+     cx="134"
+     cy="160"
+     r="15"
+     fill="#99ccff"
+     stroke="#0066cc"
+     stroke-width="1"
+     id="circle25" />
+  <circle
+     cx="84"
+     cy="220"
+     r="15"
+     fill="#99ccff"
+     stroke="#0066cc"
+     stroke-width="1"
+     id="circle26" />
+  <circle
+     cx="134"
+     cy="220"
+     r="15"
+     fill="#99ccff"
+     stroke="#0066cc"
+     stroke-width="1"
+     id="circle27" />
+  <line
+     x1="84"
+     y1="175"
+     x2="84"
+     y2="205"
+     stroke="#0066cc"
+     stroke-width="1"
+     marker-end="url(#arrowhead)"
+     id="line27" />
+  <line
+     x1="134"
+     y1="175"
+     x2="134"
+     y2="205"
+     stroke="#0066cc"
+     stroke-width="1"
+     marker-end="url(#arrowhead)"
+     id="line28" />
+  <!-- Bridge Flow Representation -->
+  <circle
+     cx="500"
+     cy="150"
+     r="15"
+     fill="#99ccff"
+     stroke="#0066cc"
+     stroke-width="1"
+     id="circle28" />
+  <circle
+     cx="550"
+     cy="150"
+     r="15"
+     fill="#28a745"
+     stroke="#198754"
+     stroke-width="2"
+     id="circle29" />
+  <circle
+     cx="500"
+     cy="210"
+     r="15"
+     fill="#99ccff"
+     stroke="#0066cc"
+     stroke-width="1"
+     id="circle30" />
+  <circle
+     cx="550"
+     cy="210"
+     r="15"
+     fill="#28a745"
+     stroke="#198754"
+     stroke-width="2"
+     id="circle31" />
+  <circle
+     cx="750"
+     cy="180"
+     r="15"
+     fill="#f8d7da"
+     stroke="#dc3545"
+     stroke-width="1.5"
+     id="circle32" />
+  <text
+     x="750"
+     y="185"
+     font-family="Arial"
+     font-size="12px"
+     text-anchor="middle"
+     id="text32">K</text>
+  <line
+     x1="500"
+     y1="165"
+     x2="500"
+     y2="195"
+     stroke="#0066cc"
+     stroke-width="1"
+     marker-end="url(#arrowhead)"
+     id="line32" />
+  <line
+     x1="550"
+     y1="165"
+     x2="550"
+     y2="195"
+     stroke="#0066cc"
+     stroke-width="1"
+     marker-end="url(#arrowhead)"
+     id="line33" />
+  <line
+     x1="565"
+     y1="150"
+     x2="735"
+     y2="180"
+     stroke="#198754"
+     stroke-width="1.5"
+     stroke-dasharray="5, 3"
+     id="line34" />
+  <line
+     x1="565"
+     y1="210"
+     x2="735"
+     y2="180"
+     stroke="#198754"
+     stroke-width="1.5"
+     stroke-dasharray="5, 3"
+     id="line35" />
+  <!-- Latent Space Visualization -->
+  <ellipse
+     cx="98"
+     cy="480"
+     rx="40"
+     ry="60"
+     fill="none"
+     stroke="#0066cc"
+     stroke-width="1.5"
+     id="ellipse35" />
+  <ellipse
+     cx="158"
+     cy="450"
+     rx="50"
+     ry="40"
+     fill="none"
+     stroke="#0066cc"
+     stroke-width="1.5"
+     id="ellipse36" />
+  <text
+     x="100.72727"
+     y="476.59091"
+     font-family="Arial"
+     font-size="10px"
+     text-anchor="middle"
+     id="text36">Parametric</text>
+  <text
+     x="100.72727"
+     y="491.59091"
+     font-family="Arial"
+     font-size="10px"
+     text-anchor="middle"
+     id="text37">Knowledge</text>
+  <ellipse
+     cx="502"
+     cy="460"
+     rx="40"
+     ry="60"
+     fill="none"
+     stroke="#dc3545"
+     stroke-width="1.5"
+     id="ellipse37" />
+  <ellipse
+     cx="562"
+     cy="430"
+     rx="50"
+     ry="40"
+     fill="none"
+     stroke="#dc3545"
+     stroke-width="1.5"
+     id="ellipse38" />
+  <text
+     x="502"
+     y="458"
+     font-family="Arial"
+     font-size="10px"
+     text-anchor="middle"
+     id="text38">External</text>
+  <text
+     x="502"
+     y="473"
+     font-family="Arial"
+     font-size="10px"
+     text-anchor="middle"
+     id="text39">Knowledge</text>
+  <line
+     x1="244.27271"
+     y1="467.38635"
+     x2="369.27274"
+     y2="467.38635"
+     stroke="#198754"
+     stroke-width="1.41421"
+     stroke-dasharray="5, 3"
+     id="line39" />
+  <text
+     x="163.92046"
+     y="448.86365"
+     font-family="Arial"
+     font-size="12px"
+     text-anchor="middle"
+     id="text40">Bridge</text>
+  <!-- Decision Boundary -->
+  <path
+     d="m 231.67908,405.66271 c 32.58029,66.92442 71.01672,85.73156 115.3093,56.42141 17.31221,-11.45618 35.51907,-30.26331 54.62058,-56.42141"
+     fill="none"
+     stroke="#ffc107"
+     stroke-width="1.64668"
+     stroke-dasharray="5, 3"
+     id="path40"
+     sodipodi:nodetypes="csc" />
+  <text
+     x="370.17044"
+     y="532.78412"
+     font-family="Arial"
+     font-size="12px"
+     text-anchor="middle"
+     id="text41">Decision Boundary</text>
+  <text
+     x="370.17044"
+     y="547.78412"
+     font-family="Arial"
+     font-size="12px"
+     text-anchor="middle"
+     font-style="italic"
+     id="text42">D(a_{B^(l)}) = τ</text>
+</svg>

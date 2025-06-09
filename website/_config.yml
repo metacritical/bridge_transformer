@@ -1,0 +1,22 @@
+title: Bridge Neural Networks
+description: Direct Neural Pathways for External Knowledge Integration
+author: Pankaj Doharey
+
+# Social media links
+github_username: pankajdoharey
+email: pankaj@zendiffusion.art
+website: https://zendiffusion.art
+
+# Site configuration
+theme: minima
+show_excerpts: true
+permalink: /:title/
+
+# Suppress SASS deprecation warnings
+sass:
+  quiet_deps: true
+  verbose: false
+
+header_pages:
+  - paper.md
+  - about.md

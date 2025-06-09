@@ -79,7 +79,7 @@ The website version is built using Jekyll and provides an online accessible vers
 
 Pankaj Doharey  
 ZenDiffusion.art  
-pankajdoharey@zendiffusion.art
+pankaj@zendiffusion.art
 
 ## License
 

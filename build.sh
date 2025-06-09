@@ -15,13 +15,19 @@ convert_svg_to_png() {
 
 # Function to display usage information
 show_usage() {
-  echo "Usage: $0 [option]"
+  echo "Usage: $0 [option] [subcommand]"
   echo "Options:"
-  echo "  markdown    Generate PDF from Markdown using pandoc"
-  echo "  website     Set up academic website using Jekyll template"
-  echo "  latex       Generate academic PDF using the LaTeX template"
-  echo "  all         Generate all formats"
-  echo "  help        Show this help message"
+  echo "  markdown         Generate PDF from Markdown using pandoc"
+  echo "  website          Build academic website (default behavior)"
+  echo "  website build    Build Jekyll website only"
+  echo "  website serve    Serve Jekyll website (builds first if needed)"
+  echo "  latex            Generate academic PDF using the LaTeX template"
+  echo "  all              Generate all formats"
+  echo "  help             Show this help message"
+  echo ""
+  echo "Examples:"
+  echo "  $0 website build    # Build website to _site directory"
+  echo "  $0 website serve    # Start local server at http://localhost:4000"
 }
 
 # Function to check if a command is available
@@ -144,19 +150,59 @@ EOF
   fi
 }
 
-# Set up the academic website
-setup_website() {
-  echo "Setting up academic website..."
+# Build the academic website (no serving)
+build_website() {
+  echo "Building academic website..."
   
-  # Run the website setup script
-  chmod +x setup_website.sh
-  ./setup_website.sh
+  # Navigate to website directory
+  cd website || { echo "❌ Website directory not found"; return 1; }
+  
+  # Load Ruby environment
+  source ~/.bash_profile
+  
+  # Build Jekyll site only
+  echo "Building Jekyll site with Bridge Neural Networks content..."
+  bundle exec jekyll build
   
   if [ $? -eq 0 ]; then
-    echo "✅ Website setup completed."
+    echo "✅ Website built successfully!"
+    echo "📄 Website available at: website/_site/index.html"
+    echo "🎨 Beautiful academic template with your actual Bridge Neural Networks content"
+    cd ..
   else
-    echo "❌ Failed to setup website."
+    echo "❌ Website build failed"
+    cd ..
+    return 1
   fi
+}
+
+# Serve the academic website
+serve_website() {
+  echo "Serving academic website..."
+  
+  # Navigate to website directory
+  cd website || { echo "❌ Website directory not found"; return 1; }
+  
+  # Load Ruby environment
+  source ~/.bash_profile
+  
+  # Check if site is already built
+  if [ ! -d "_site" ]; then
+    echo "📦 Site not built yet, building first..."
+    bundle exec jekyll build
+    if [ $? -ne 0 ]; then
+      echo "❌ Build failed"
+      cd ..
+      return 1
+    fi
+  fi
+  
+  # Start local server
+  echo "Starting local server..."
+  echo "🌐 Website will be available at: http://localhost:4000"
+  echo "Press Ctrl+C to stop the server"
+  
+  bundle exec jekyll serve --port 4000 --host 0.0.0.0
 }
 
 # Generate LaTeX PDF
@@ -222,14 +268,21 @@ case "$1" in
     generate_markdown_pdf
     ;;
   website)
-    setup_website
+    if [ "$2" == "build" ]; then
+      build_website
+    elif [ "$2" == "serve" ]; then
+      serve_website
+    else
+      # Default behavior for backward compatibility - build only
+      build_website
+    fi
     ;;
   latex)
     generate_latex_pdf
     ;;
   all)
     generate_markdown_pdf
-    setup_website
+    build_website
     generate_latex_pdf
     ;;
   help)

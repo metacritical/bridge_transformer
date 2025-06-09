@@ -2,45 +2,51 @@ name: Deploy Jekyll site to Pages
 
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+          working-directory: ./website
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v4
+      - name: Build with Jekyll
+        run: |
+          cd website
+          bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+        env:
+          JEKYLL_ENV: production
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./website/_site
 
-    - name: Install dependencies for SVG and PDF conversion
-      run: |
-        sudo apt-get update
-        sudo apt-get install librsvg2-bin pandoc texlive-latex-base texlive-xcolor -y
-
-    - name: Install LaTeX packages
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y texlive-latex-base texlive-latex-extra texlive-fonts-recommended texlive-xcolor texlive-fonts-extra texlive-science
-
-    - name: Build PDF and HTML from Markdown
-      run: |
-        ./build.sh markdown build
-        mkdir -p website/static/pdfs
-        if [ -f output/bridge_neural_networks_md.pdf ]; then
-          cp output/bridge_neural_networks_md.pdf website/static/pdfs/bridge_neural_networks.pdf
-        else
-          echo "PDF not generated, using HTML fallback."
-        fi
-
-    - name: Build Jekyll site
-      run: |
-        cd website
-        bundle install
-        bundle exec jekyll build
-
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: site
-        path: website/_site
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

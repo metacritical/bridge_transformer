@@ -20,7 +20,7 @@ The complete research paper has been divided into the following sections:
 
 ## Figures
 
-The following figures have been exported to the `chats/figures` directory:
+The following figures have been exported to the `research/figures` directory:
 
 1. **Bridge Architecture** - `figure1_bridge_architecture.svg`
 2. **Bridge Neuron Activation Mechanism** - `figure2_bridge_activation_mechanism.svg`

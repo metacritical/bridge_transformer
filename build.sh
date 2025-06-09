@@ -150,10 +150,8 @@ EOF
   fi
 }
 
-# Build the academic website (no serving)
-build_website() {
-  echo "Building academic website..."
-  
+# Prepare website assets (figures and dependencies)
+prepare_website_assets() {
   # Ensure PNG files exist (convert if needed)
   if [ ! -d "figures/png" ] || [ -z "$(ls -A figures/png 2>/dev/null)" ]; then
     echo "📷 Converting SVG figures to PNG for website..."
@@ -164,6 +162,14 @@ build_website() {
   echo "📁 Copying figures to website assets..."
   mkdir -p website/assets/images
   cp figures/png/*.png website/assets/images/ 2>/dev/null || echo "⚠️  No PNG files to copy"
+}
+
+# Build the academic website (no serving)
+build_website() {
+  echo "Building academic website..."
+  
+  # Prepare assets
+  prepare_website_assets
   
   # Navigate to website directory
   cd website || { echo "❌ Website directory not found"; return 1; }
@@ -190,6 +196,9 @@ build_website() {
 # Serve the academic website
 serve_website() {
   echo "Serving academic website..."
+  
+  # Prepare assets first
+  prepare_website_assets
   
   # Navigate to website directory
   cd website || { echo "❌ Website directory not found"; return 1; }

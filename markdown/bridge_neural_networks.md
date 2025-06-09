@@ -1,22 +1,12 @@
 ---
-title: "Bridge Neural Networks: Direct Neural Pathways for External Knowledge Integration"
+title: "Bridge Neural Networks for External Knowledge Integration"
 author: "Pankaj Doharey"
+contact: "pankaj@zendiffusion.art"
 institute: "ZenDiffusion.art"
-email: "pankajdoharey@zendiffusion.art"
 date: "April 2025"
 abstract: "Large language models (LLMs) face inherent limitations in knowledge access and factuality, constrained by their parametric knowledge representations. While retrieval-augmented generation (RAG) has emerged as a solution, it suffers from context window pollution, reduced reasoning capacity, and unnatural integration of external information. We propose Bridge Neural Networks (BNNs), a novel architecture that repurposes a subset of neurons to create dedicated neural pathways for external knowledge access. Unlike RAG, BNNs detect knowledge boundaries through trained neuron activations, generate neural query representations, and integrate external information directly at the hidden state level without consuming context tokens. We present a theoretical foundation for BNNs, detail their architecture, outline training methodology, and propose evaluation frameworks that measure factuality, reasoning preservation, and integration quality. Our analysis suggests BNNs offer a more elegant and efficient approach to knowledge integration that preserves model reasoning capacity while enabling selective external information access."
 keywords: [neural networks, language models, knowledge integration, external memory, retrieval]
 ---
-
-# Bridge Neural Networks: Direct Neural Pathways for External Knowledge Integration
-
-**Pankaj Doharey**  
-ZenDiffusion.art  
-pankajdoharey@zendiffusion.art
-
-## Abstract
-
-Large language models (LLMs) face inherent limitations in knowledge access and factuality, constrained by their parametric knowledge representations. While retrieval-augmented generation (RAG) has emerged as a solution, it suffers from context window pollution, reduced reasoning capacity, and unnatural integration of external information. We propose Bridge Neural Networks (BNNs), a novel architecture that repurposes a subset of neurons to create dedicated neural pathways for external knowledge access. Unlike RAG, BNNs detect knowledge boundaries through trained neuron activations, generate neural query representations, and integrate external information directly at the hidden state level without consuming context tokens. We present a theoretical foundation for BNNs, detail their architecture, outline training methodology, and propose evaluation frameworks that measure factuality, reasoning preservation, and integration quality. Our analysis suggests BNNs offer a more elegant and efficient approach to knowledge integration that preserves model reasoning capacity while enabling selective external information access.
 
 **Keywords**: neural networks, language models, knowledge integration, external memory, retrieval
 
@@ -78,9 +68,11 @@ The Bridge Neural Network architecture consists of four key components:
 
 These components work together to create a seamless flow from language generation to knowledge retrieval and back to generation, without disrupting the context window.
 
-![Bridge Neural Network Architecture](figures/figure1_bridge_architecture.svg)
+![Bridge Neural Network Architecture](figures/png/figure1_bridge_architecture.png)
 
 *Figure 1: Bridge Neural Network Architecture showing the base transformer model with bridge neurons and external knowledge service connections.*
+
+\clearpage
 
 ### 3.2 Bridge Detector Neurons
 
@@ -133,9 +125,11 @@ The resulting integration vector is added to the hidden states at strategic posi
 
 This direct neural integration differs fundamentally from RAG approaches that inject retrieved text into the context window. It preserves the model's reasoning capacity while enriching it with external knowledge exactly where needed.
 
-![Information Flow Comparison](figures/figure2_information_flow_comparison.svg)
+![Information Flow Comparison](figures/png/figure2_information_flow_comparison.png)
 
 *Figure 2: Comparison of information flow in traditional RAG (left) versus Bridge Neural Networks (right). The key differences are context pollution vs. neural pathways, constant retrieval vs. selective activation, and text injection vs. neural integration.*
+
+\clearpage
 
 ## 4. Mathematical Framework
 
@@ -212,9 +206,11 @@ $$|B|^* = \frac{1}{\beta}(\frac{\alpha\beta}{\lambda} - 1)$$
 
 Our initial experiments suggest that $\alpha\beta/\lambda \approx 1.05$, yielding an optimal bridge allocation of approximately 3-5% of neurons in any given layer, with variance depending on the layer's position in the network.
 
-![Mathematical Framework](figures/figure4_mathematical_framework.svg)
+![Mathematical Framework](figures/png/figure4_mathematical_framework.png)
 
 *Figure 3: Mathematical Framework for Bridge Neural Networks, showing modified transformer equations, bridge activation functions, information theoretic perspective, and capacity analysis.*
+
+\clearpage
 
 ## 5. Training Methodology
 
@@ -229,7 +225,7 @@ We propose a curriculum-based training approach with four progressive phases:
 
 This phased approach allows the model to progressively learn the complex task of knowledge integration.
 
-![Training Curriculum](figures/figure5_training_curriculum.svg)
+![Training Curriculum](figures/png/figure5_training_curriculum.png)
 
 *Figure 4: Bridge Neural Network Training Curriculum showing the four phases of training, each with specific loss functions and metrics.*
 
@@ -258,11 +254,13 @@ $$W' = W + \Delta W = W + A \cdot B$$
 
 where $A \in \mathbb{R}^{d \times r}$ and $B \in \mathbb{R}^{r \times d}$ with rank $r \ll d$. This approach significantly reduces the number of trainable parameters while allowing effective adaptation.
 
+\clearpage
+
 ### 5.4 Pruning-Guided Bridge Allocation
 
 Rather than arbitrarily selecting neurons for bridge functionality, Pruning-Guided Bridge Allocation (PGBA) uses network pruning techniques to identify neurons that can be repurposed with minimal impact on the model's core capabilities.
 
-![Pruning-Guided Bridge Allocation](figures/figure3_pruning_bridge_allocation.svg)
+![Pruning-Guided Bridge Allocation](figures/png/figure3_pruning_bridge_allocation.png)
 
 *Figure 5: Pruning-Guided Bridge Allocation process: First, identify low-importance neurons through pruning analysis. Then, repurpose them as bridge neurons for external knowledge access.*
 
@@ -285,6 +283,8 @@ The mathematical formulation for PGBA involves:
 4. **Bridge Allocation**: Repurpose neurons with $\Delta P < \epsilon$ as bridge neurons.
 
 This approach guarantees that bridge functionality is added with minimal disruption to the model's core capabilities, as it utilizes neural pathways that are demonstrably less critical to the original task.
+
+\clearpage
 
 ## 6. Evaluation Framework
 
@@ -351,6 +351,8 @@ The external knowledge service can be implemented using:
 
 The modular design allows for flexibility in knowledge source selection based on the application domain.
 
+\clearpage
+
 ### 7.3 Inference Optimization
 
 During inference, several optimizations can be applied:
@@ -399,6 +401,8 @@ Extending the approach to connect language models with visual, audio, and other 
 
 #### 9.2.4 Hierarchical Knowledge Integration
 Developing bridge mechanisms that operate at different levels of abstraction and time scales would enable more sophisticated knowledge integration. This could involve tiered bridge systems that handle different types of knowledge needs, from factual recall to complex reasoning support.
+
+\clearpage
 
 ## 10. Conclusion
 

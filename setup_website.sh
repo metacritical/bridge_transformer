@@ -73,8 +73,8 @@ description: Direct Neural Pathways for External Knowledge Integration
 ---
 EOL
 
-# Append the content of the markdown document
-cat markdown/bridge_neural_networks.md | sed 's/..\/figures\//\/assets\/images\//g' >> website/paper.md
+# Append the content of the markdown document with corrected image paths
+cat markdown/bridge_neural_networks.md | sed 's/figures\//\/assets\/images\//g' >> website/paper.md
 
 # Create an about page
 cat > website/about.md << 'EOL'
@@ -138,6 +138,29 @@ header_pages:
   - paper.md
   - about.md
 EOL
+
+# Create a Gemfile if it doesn't exist
+if [ ! -f "website/Gemfile" ]; then
+    echo "Creating Gemfile..."
+    cat > website/Gemfile << 'EOL'
+source "https://rubygems.org"
+
+gem "jekyll", "~> 4.2"
+gem "webrick", "~> 1.7"  # Needed for Ruby 3.0+
+gem "minima", "~> 2.5"   # The minima theme
+
+# If you want to use GitHub Pages
+# gem "github-pages", group: :jekyll_plugins
+
+# Jekyll plugins
+group :jekyll_plugins do
+  gem "jekyll-feed"
+  gem "jekyll-seo-tag"
+  gem "jekyll-sitemap"
+end
+EOL
+    echo "Gemfile created."
+fi
 
 echo "✅ Website setup completed."
 echo "To test the website locally, run:"

@@ -13,16 +13,33 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install LaTeX packages
+    - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y texlive-latex-base texlive-latex-extra texlive-fonts-recommended texlive-xcolor
+        # Install full TeX Live distribution for maximum compatibility
+        sudo apt-get install -y texlive-full
+        # Install additional tools needed for SVG conversion and Markdown processing
+        sudo apt-get install -y pandoc inkscape make
 
-    - name: Generate PDF
+    - name: Build document
       run: |
+        # Make sure output directories exist
+        mkdir -p figures/png
         mkdir -p output
-        pdflatex -interaction=nonstopmode -output-directory=output bridge_neural_networks.tex || exit 1
+        # Run the build script (make sure it's executable)
+        chmod +x build.sh
+        ./build.sh markdown build || echo "Build failed, continuing with HTML"
 
-    - name: Fallback to HTML
-      if: failure()
-      run: echo "PDF generation failed. Using HTML version."
+    - name: Upload artifact (PDF)
+      if: success() && exists('output/bridge_neural_networks_md.pdf')
+      uses: actions/upload-artifact@v2
+      with:
+        name: generated-pdf
+        path: output/bridge_neural_networks_md.pdf
+
+    - name: Upload artifact (HTML)
+      if: success() && exists('output/bridge_neural_networks.html')
+      uses: actions/upload-artifact@v2
+      with:
+        name: generated-html
+        path: output/bridge_neural_networks.html

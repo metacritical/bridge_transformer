@@ -11,6 +11,7 @@ website: https://zendiffusion.art
 theme: minima
 show_excerpts: true
 permalink: /:title/
+baseurl: ""  # set your base URL, e.g., "/bridge_transformer" if necessary
 
 # Suppress SASS deprecation warnings
 sass:
@@ -20,3 +21,8 @@ sass:
 header_pages:
   - paper.md
   - about.md
+
+include:
+  - images
+exclude:
+  - static/images/favicon.ico

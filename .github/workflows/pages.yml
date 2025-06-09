@@ -20,12 +20,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install dependencies for SVG and PDF conversion
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y librsvg2-bin pandoc texlive-latex-base texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.1'
           bundler-cache: true
           working-directory: ./website
+      - name: Build PDF and HTML from Markdown
+        run: |
+          ./build.sh markdown build
+          mkdir -p website/static/pdfs
+          if [ -f output/bridge_neural_networks_md.pdf ]; then
+            cp output/bridge_neural_networks_md.pdf website/static/pdfs/bridge_neural_networks.pdf
+          else
+            echo "PDF not generated, using HTML fallback."
+          fi
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4

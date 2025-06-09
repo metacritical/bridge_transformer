@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write # changed to write so workflow can commit Gemfile.lock if necessary
   pages: write
   id-token: write
 
@@ -21,8 +21,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Add Linux platform to Gemfile.lock
-        run: cd website && bundle lock --add-platform x86_64-linux
+      # Optional: Remove Gemfile.lock to ensure it's generated for Linux
+      - name: Remove Gemfile.lock
+        run: rm -f website/Gemfile.lock
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -30,6 +31,26 @@ jobs:
           ruby-version: '3.1'
           bundler-cache: true
           working-directory: ./website
+
+      - name: Install dependencies
+        run: |
+          cd website
+          bundle install --jobs 4 --retry 3
+
+      # Optional: Commit updated Gemfile.lock if it changed (only on main)
+      - name: Commit updated Gemfile.lock if changed
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cd website
+          git config --global user.email "ci@github.com"
+          git config --global user.name "GitHub Actions"
+          git add Gemfile.lock
+          if ! git diff --cached --quiet; then
+            git commit -m "Update Gemfile.lock for Linux platform [skip ci]"
+            git push
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Pages
         id: pages

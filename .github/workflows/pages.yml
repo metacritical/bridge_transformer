@@ -52,6 +52,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Build PDF from Markdown
+        run: |
+          ./build.sh markdown build
+          mkdir -p website/static/pdfs
+          cp output/bridge_neural_networks_md.pdf website/static/pdfs/bridge_neural_networks.pdf
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4

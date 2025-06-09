@@ -14,3 +14,11 @@ node_modules/
 *.tmp
 *~
 .DS_Store
+
+# Ignore LaTeX build artifacts
+*.log
+*.aux
+*.out
+*.toc
+*.bbl
+*.blg

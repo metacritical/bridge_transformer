@@ -154,6 +154,17 @@ EOF
 build_website() {
   echo "Building academic website..."
   
+  # Ensure PNG files exist (convert if needed)
+  if [ ! -d "figures/png" ] || [ -z "$(ls -A figures/png 2>/dev/null)" ]; then
+    echo "📷 Converting SVG figures to PNG for website..."
+    convert_svg_to_png
+  fi
+  
+  # Copy PNG figures to website assets
+  echo "📁 Copying figures to website assets..."
+  mkdir -p website/assets/images
+  cp figures/png/*.png website/assets/images/ 2>/dev/null || echo "⚠️  No PNG files to copy"
+  
   # Navigate to website directory
   cd website || { echo "❌ Website directory not found"; return 1; }
   
@@ -260,14 +271,14 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
-# Always convert SVG to PNG first
-convert_svg_to_png
-
 case "$1" in
   markdown)
+    # Convert SVG to PNG for markdown builds
+    convert_svg_to_png
     generate_markdown_pdf
     ;;
   website)
+    # Website builds don't need PNG conversion (uses SVG directly)
     if [ "$2" == "build" ]; then
       build_website
     elif [ "$2" == "serve" ]; then
@@ -278,9 +289,13 @@ case "$1" in
     fi
     ;;
   latex)
+    # Convert SVG to PNG for LaTeX builds
+    convert_svg_to_png
     generate_latex_pdf
     ;;
   all)
+    # Convert once for all builds
+    convert_svg_to_png
     generate_markdown_pdf
     build_website
     generate_latex_pdf

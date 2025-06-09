@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write # changed to write so workflow can commit Gemfile.lock if necessary
+  contents: write
   pages: write
   id-token: write
 
@@ -18,10 +18,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Optional: Remove Gemfile.lock to ensure it's generated for Linux
       - name: Remove Gemfile.lock
         run: rm -f website/Gemfile.lock
 
@@ -35,14 +34,13 @@ jobs:
       - name: Install dependencies for SVG and PDF conversion
         run: |
           sudo apt-get update
-          sudo apt-get install librsvg2-bin pandoc -y
+          sudo apt-get install librsvg2-bin pandoc texlive-latex-base -y
 
-      - name: Install dependencies
+      - name: Install Ruby dependencies
         run: |
           cd website
           bundle install --jobs 4 --retry 3
 
-      # Optional: Commit updated Gemfile.lock if it changed (only on main)
       - name: Commit updated Gemfile.lock if changed
         if: github.ref == 'refs/heads/main'
         run: |

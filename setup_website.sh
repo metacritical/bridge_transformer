@@ -8,23 +8,18 @@ echo "Setting up Bridge Neural Networks website..."
 # Navigate to website directory
 cd website
 
-# Remove generic template if it exists (causes conflicts)
-if [ -f "index.html" ]; then
-    echo "Removing generic HTML template..."
-    rm index.html
-fi
-
 # Load Ruby environment
 source ~/.bash_profile
 
 # Build Jekyll site
-echo "Building Jekyll site with your paper content..."
+echo "Building Jekyll site with Bridge Neural Networks content..."
 bundle exec jekyll build
 
 if [ $? -eq 0 ]; then
     echo "✅ Website built successfully!"
     echo "📄 Website available at: website/_site/index.html"
-    echo "🔗 Paper content now properly displayed with Bridge Neural Networks content"
+    echo "🎨 Beautiful academic template with your actual Bridge Neural Networks content"
+    echo "🔗 Professional design showing your research instead of Lorem ipsum"
     
     # Start local server for testing
     echo "Starting local server for testing..."

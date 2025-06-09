@@ -32,6 +32,11 @@ jobs:
           bundler-cache: true
           working-directory: ./website
 
+      - name: Install dependencies for SVG and PDF conversion
+        run: |
+          sudo apt-get update
+          sudo apt-get install librsvg2-bin pandoc -y
+
       - name: Install dependencies
         run: |
           cd website

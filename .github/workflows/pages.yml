@@ -26,6 +26,9 @@ jobs:
           ruby-version: '3.1'
           bundler-cache: true
           working-directory: ./website
+      - name: Add Linux platform to lockfile
+        run: bundle lock --add-platform x86_64-linux
+        working-directory: ./website
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4

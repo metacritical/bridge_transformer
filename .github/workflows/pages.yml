@@ -13,33 +13,29 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install dependencies
+    - name: Install LaTeX packages
       run: |
         sudo apt-get update
-        # Install full TeX Live distribution for maximum compatibility
-        sudo apt-get install -y texlive-full
-        # Install additional tools needed for SVG conversion and Markdown processing
-        sudo apt-get install -y pandoc inkscape make
+        sudo apt-get install -y texlive-latex-base texlive-latex-extra texlive-fonts-recommended texlive-xcolor texlive-fonts-extra texlive-science
 
-    - name: Build document
+    - name: Build PDF and HTML from Markdown
       run: |
-        # Make sure output directories exist
-        mkdir -p figures/png
-        mkdir -p output
-        # Run the build script (make sure it's executable)
-        chmod +x build.sh
-        ./build.sh markdown build || echo "Build failed, continuing with HTML"
+        ./build.sh markdown build
+        mkdir -p website/static/pdfs
+        if [ -f output/bridge_neural_networks_md.pdf ]; then
+          cp output/bridge_neural_networks_md.pdf website/static/pdfs/bridge_neural_networks.pdf
+        else
+          echo "PDF not generated, using HTML fallback."
+        fi
 
-    - name: Upload artifact (PDF)
-      if: success() && exists('output/bridge_neural_networks_md.pdf')
-      uses: actions/upload-artifact@v2
-      with:
-        name: generated-pdf
-        path: output/bridge_neural_networks_md.pdf
+    - name: Build Jekyll site
+      run: |
+        cd website
+        bundle install
+        bundle exec jekyll build
 
-    - name: Upload artifact (HTML)
-      if: success() && exists('output/bridge_neural_networks.html')
-      uses: actions/upload-artifact@v2
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
       with:
-        name: generated-html
-        path: output/bridge_neural_networks.html
+        name: site
+        path: website/_site

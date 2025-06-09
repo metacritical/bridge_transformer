@@ -20,37 +20,40 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Ruby
-  	uses: ruby/setup-ruby@v2
-  	with:
-    	  ruby-version: '3.1'
-    	  bundler-cache: true
-    	  working-directory: ./website
-  	retry:
-    	  max-retries: 3
-    	  delay-seconds: 10
+        uses: ruby/setup-ruby@v2
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+          working-directory: ./website
+
       - name: Add Linux platform to lockfile
         run: bundle lock --add-platform x86_64-linux
         working-directory: ./website
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
+
       - name: Build with Jekyll
         run: |
           cd website
           bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./website/_site
+
       - name: Debug Setup Ruby
-  	run: |
-    	  echo "Debugging Ruby setup..."
-    	  ls -la
-    	  ruby --version
-    	  bundle --version
+        run: |
+          echo "Debugging Ruby setup..."
+          ls -la
+          ruby --version
+          bundle --version
 
   deploy:
     environment:

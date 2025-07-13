@@ -34,7 +34,7 @@ where $X$ represents the input sequence. This allows us to view bridge activatio
 
 #### 3.6.3 Information Theoretic Perspective
 
-From an information-theoretic standpoint, the bridge mechanism optimizes the trade-off between using parametric and non-parametric knowledge. We can define an information utility function:
+From an information-theoretic standpoint, the bridge mechanism optimizes the trade-off between using parametric and non-parametric knowledge. This relates to recent work on adaptive computation [20] and memory-augmented transformers [21]. We can define an information utility function:
 
 $$U(X, B, K) = I(Y; X, B, K) - \lambda C(B, K)$$
 

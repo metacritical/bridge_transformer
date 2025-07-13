@@ -14,7 +14,7 @@ Large language models (LLMs) have demonstrated remarkable capabilities in natura
 2. **Knowledge Staleness**: Models trained on static corpora cannot access information that emerges after training.
 3. **Hallucination**: Models often generate plausible but factually incorrect information when operating beyond their knowledge boundaries [3].
 
-The dominant approach to address these limitations has been retrieval-augmented generation (RAG), which retrieves relevant documents from external sources and injects them into the context window [4, 5]. While effective, RAG introduces significant drawbacks:
+The dominant approach to address these limitations has been retrieval-augmented generation (RAG), which retrieves relevant documents from external sources and injects them into the context window [4, 5]. Recent advances and comprehensive surveys [16, 23, 28] demonstrate the rapid evolution of retrieval-augmented methods. While effective, RAG introduces significant drawbacks:
 
 1. **Context Window Pollution**: Retrieved documents consume precious context tokens, reducing the space available for user queries and reasoning.
 2. **Integration Artifacts**: The separation between retrieval and generation creates artificial boundaries in the generation process.

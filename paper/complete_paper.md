@@ -14,7 +14,7 @@ Large language models (LLMs) have demonstrated remarkable capabilities in natura
 2. **Knowledge Staleness**: Models trained on static corpora cannot access information that emerges after training.
 3. **Hallucination**: Models often generate plausible but factually incorrect information when operating beyond their knowledge boundaries [3].
 
-The dominant approach to address these limitations has been retrieval-augmented generation (RAG), which retrieves relevant documents from external sources and injects them into the context window [4, 5]. While effective, RAG introduces significant drawbacks:
+The dominant approach to address these limitations has been retrieval-augmented generation (RAG), which retrieves relevant documents from external sources and injects them into the context window [4, 5]. Recent advances and comprehensive surveys [16, 23, 28] demonstrate the rapid evolution of retrieval-augmented methods. While effective, RAG introduces significant drawbacks:
 
 1. **Context Window Pollution**: Retrieved documents consume precious context tokens, reducing the space available for user queries and reasoning.
 2. **Integration Artifacts**: The separation between retrieval and generation creates artificial boundaries in the generation process.
@@ -28,13 +28,11 @@ This paper makes the following contributions:
 1. We introduce the bridge neural network architecture, which enables seamless integration of external knowledge without context window pollution.
 2. We present a training methodology for teaching models to recognize knowledge boundaries and activate bridge mechanisms.
 3. We outline a neural query representation approach that translates internal states to retrieval queries.
-4. We propose evaluation frameworks to assess the effectiveness of BNNs in knowledge integration tasks.
-
-## 2. Related Work
+4. We propose evaluation frameworks to assess the effectiveness of BNNs in knowledge integration tasks.## 2. Related Work
 
 ### 2.1 Retrieval-Augmented Language Models
 
-Retrieval-augmented language models enhance generation capabilities by incorporating external knowledge. REALM [4] and RAG [5] pioneered this approach, using dense retrievers to fetch relevant documents that are then provided as additional context for language modeling. Subsequent work has refined these approaches with improved retrievers [6], rerankers [7], and more sophisticated integration methods [8].
+Retrieval-augmented language models enhance generation capabilities by incorporating external knowledge. REALM [4] and RAG [5] pioneered this approach, using dense retrievers to fetch relevant documents that are then provided as additional context for language modeling. Subsequent work has refined these approaches with improved retrievers [6], rerankers [7], and more sophisticated integration methods [8]. Recent advances include RETRO [22], which retrieves from trillions of tokens, Self-RAG [27] for self-reflection, and corrective RAG [29] for improved accuracy. Comprehensive surveys [16, 23, 30] highlight the rapid evolution of this field.
 
 ### 2.2 Parameter-Efficient Fine-Tuning
 
@@ -46,13 +44,19 @@ Neural module networks [11] and mixture-of-experts architectures [12] employ spe
 
 ### 2.4 External Memory Mechanisms
 
-External memory architectures such as Neural Turing Machines [13] and Memory Networks [14] augment neural networks with explicit memory components. Our approach shares the goal of expanding the model's knowledge capacity but focuses on creating direct neural pathways to external knowledge sources rather than training end-to-end differentiable memory systems.
+External memory architectures such as Neural Turing Machines [13] and Memory Networks [14] augment neural networks with explicit memory components. Recent work has shown that transformer feed-forward layers naturally function as key-value memories [24], and persistent memory mechanisms can augment self-attention [21]. Extensions like Transformer-XL [25] and ALiBi [26] address context length limitations. Our approach shares the goal of expanding the model's knowledge capacity but focuses on creating direct neural pathways to external knowledge sources rather than training end-to-end differentiable memory systems.
 
-### 2.5 Biological Inspiration
+### 2.5 Neural Pruning and Sparsity
 
-Our bridge mechanism draws inspiration from biological systems where specialized neural pathways connect different functional areas of the brain [15]. Gateway neurons in cognitive systems serve as interfaces between different processing modules, similar to how our bridge neurons facilitate communication between the language model and external knowledge sources.
+Our Pruning-Guided Bridge Allocation (PGBA) approach builds on extensive research in neural network pruning. The lottery ticket hypothesis [17] demonstrates that sparse subnetworks can match dense network performance. Classical work on optimal brain damage [18] and modern approaches using L0 regularization [19] provide theoretical foundations for identifying less critical neurons. These methods inform our approach to repurposing neurons with minimal impact on model performance.
 
-## 3. Bridge Neural Network Architecture
+### 2.6 Adaptive Computation
+
+Recent work on adaptive computation in language models is relevant to our bridge activation mechanism. Confident Adaptive Language Modeling (CALM) [20] demonstrates that models can learn when to stop computation early, similar to how our bridge neurons learn when external knowledge is needed. This adaptive approach ensures efficient use of computational resources.
+
+### 2.7 Biological Inspiration
+
+Our bridge mechanism draws inspiration from biological systems where specialized neural pathways connect different functional areas of the brain [15]. Gateway neurons in cognitive systems serve as interfaces between different processing modules, similar to how our bridge neurons facilitate communication between the language model and external knowledge sources.## 3. Bridge Neural Network Architecture
 
 ### 3.1 Conceptual Framework
 
@@ -64,11 +68,11 @@ The Bridge Neural Network architecture consists of four key components:
 
 These components work together to create a seamless flow from language generation to knowledge retrieval and back to generation, without disrupting the context window. Figure 1 illustrates the overall architecture.
 
-![Bridge Neural Network Architecture](figure_placeholder)
+![Bridge Neural Network Architecture](figures/png/figure1_bridge_architecture.png)
 
 ### 3.2 Bridge Detector Neurons
 
-The bridge detector mechanism is the core innovation of our approach. We repurpose a small subset (typically 3-5%) of neurons in specific transformer layers to serve as bridge detectors.
+The bridge detector mechanism is the core innovation of our approach. We repurpose a small subset (typically 3-5%) of neurons in specific transformer layers to serve as bridge detectors. This builds on insights that transformer feed-forward layers naturally function as key-value memories [24], suggesting that neurons already encode knowledge boundaries.
 
 Formally, given a transformer with hidden dimension $h$ and layer $l$, we select a subset of neurons $B_l \subset \{1, 2, ..., h\}$ to serve as bridge neurons. The activations of these neurons, denoted $a_{B_l}$, are monitored during the forward pass.
 
@@ -115,9 +119,7 @@ $$I(r) = W_i2 \cdot \text{ReLU}(W_i1 \cdot r + b_i1) + b_i2$$
 
 The resulting integration vector is added to the hidden states at strategic positions in the transformer stack, typically at layers following the bridge activation.
 
-This direct neural integration differs fundamentally from RAG approaches that inject retrieved text into the context window. It preserves the model's reasoning capacity while enriching it with external knowledge exactly where needed.
-
-### 3.6 Mathematical Framework for Bridge Neural Networks
+This direct neural integration differs fundamentally from RAG approaches that inject retrieved text into the context window. It preserves the model's reasoning capacity while enriching it with external knowledge exactly where needed.### 3.6 Mathematical Framework for Bridge Neural Networks
 
 #### 3.6.1 Information Flow Analysis
 
@@ -143,6 +145,8 @@ $$\mathbb{1}_{B^{(l)}} = \begin{cases}
 0, & \text{otherwise}
 \end{cases}$$
 
+![Information Flow Comparison](figures/png/figure2_information_flow_comparison.png)
+
 #### 3.6.2 Probabilistic Interpretation
 
 We can interpret bridge activation as a learned probabilistic gate. The probability of activating the bridge at layer $l$ is:
@@ -153,7 +157,7 @@ where $X$ represents the input sequence. This allows us to view bridge activatio
 
 #### 3.6.3 Information Theoretic Perspective
 
-From an information-theoretic standpoint, the bridge mechanism optimizes the trade-off between using parametric and non-parametric knowledge. We can define an information utility function:
+From an information-theoretic standpoint, the bridge mechanism optimizes the trade-off between using parametric and non-parametric knowledge. This relates to recent work on adaptive computation [20] and memory-augmented transformers [21]. We can define an information utility function:
 
 $$U(X, B, K) = I(Y; X, B, K) - \lambda C(B, K)$$
 
@@ -216,7 +220,7 @@ $$|B|^* = \frac{1}{\beta}(\frac{\alpha\beta}{\lambda} - 1)$$
 
 Our initial experiments suggest that $\alpha\beta/\lambda \approx 1.05$, yielding an optimal bridge allocation of approximately 3-5% of neurons in any given layer, with variance depending on the layer's position in the network.
 
-## 4. Training Methodology
+![Mathematical Framework](figures/png/figure4_mathematical_framework.png)## 4. Training Methodology
 
 ### 4.1 Multi-Phase Training Curriculum
 
@@ -228,6 +232,8 @@ We propose a curriculum-based training approach with four progressive phases:
 4. **Integration Phase**: Optimize the model's ability to incorporate retrieved information into its generation process.
 
 This phased approach allows the model to progressively learn the complex task of knowledge integration.
+
+![Training Curriculum](figures/png/figure5_training_curriculum.png)
 
 ### 4.2 Loss Functions
 
@@ -252,9 +258,7 @@ Specifically, for transformer weights $W$, we add low-rank updates:
 
 $$W' = W + \Delta W = W + A \cdot B$$
 
-where $A \in \mathbb{R}^{d \times r}$ and $B \in \mathbb{R}^{r \times d}$ with rank $r \ll d$. This approach significantly reduces the number of trainable parameters while allowing effective adaptation.
-
-## 5. Evaluation Framework
+where $A \in \mathbb{R}^{d \times r}$ and $B \in \mathbb{R}^{r \times d}$ with rank $r \ll d$. This approach significantly reduces the number of trainable parameters while allowing effective adaptation.## 5. Evaluation Framework
 
 ### 5.1 Knowledge Boundary Detection
 
@@ -294,9 +298,7 @@ To measure computational and architectural efficiency:
 
 1. **Activation Rate**: How often the bridge mechanism is triggered during generation.
 2. **Latency Impact**: Additional time required for bridge activation and retrieval.
-3. **Parameter Efficiency**: Number of additional parameters relative to the base model.
-
-## 6. Implementation Details
+3. **Parameter Efficiency**: Number of additional parameters relative to the base model.## 6. Implementation Details
 
 ### 6.1 Model Architecture Specifications
 
@@ -326,9 +328,7 @@ During inference, several optimizations can be applied:
 1. **Caching**: Frequent queries and responses can be cached to reduce latency.
 2. **Batch Processing**: Multiple potential bridge activations can be batched for efficient retrieval.
 3. **Adaptive Thresholding**: The bridge activation threshold can be dynamically adjusted based on confidence scores.
-4. **Early Termination**: Bridge activation can be skipped for high-confidence generations.
-
-## 7. Potential Applications
+4. **Early Termination**: Bridge activation can be skipped for high-confidence generations.## 7. Potential Applications
 
 ### 7.1 Long-Form Content Generation
 
@@ -344,9 +344,7 @@ In conversational systems, BNNs can provide factual information without the user
 
 ### 7.4 Tool Integration
 
-Beyond text retrieval, BNNs can interface with computational tools, databases, and APIs without requiring explicit prompting or complex tool-use frameworks.
-
-## 8. Limitations and Future Work
+Beyond text retrieval, BNNs can interface with computational tools, databases, and APIs without requiring explicit prompting or complex tool-use frameworks.## 8. Limitations and Future Work
 
 ### 8.1 Current Limitations
 
@@ -365,7 +363,7 @@ Beyond text retrieval, BNNs can interface with computational tools, databases, a
 
 #### Future Work Direction
 
-A promising direction for future research is what we term "Pruning-Guided Bridge Allocation" (PGBA). Rather than arbitrarily selecting neurons for bridge functionality, PGBA uses network pruning techniques to identify neurons that can be repurposed with minimal impact on the model's core capabilities.
+A promising direction for future research is what we term "Pruning-Guided Bridge Allocation" (PGBA). Rather than arbitrarily selecting neurons for bridge functionality, PGBA uses network pruning techniques [17, 18, 19] to identify neurons that can be repurposed with minimal impact on the model's core capabilities.
 
 The mathematical formulation for PGBA involves:
 
@@ -397,15 +395,13 @@ Initial theoretical analysis suggests this approach could reduce the performance
 
 The PGBA method represents a principled approach to bridge neuron allocation that leverages the natural redundancy in neural networks to create knowledge pathways without sacrificing existing capabilities.
 
-## 9. Conclusion
+![Pruning-Guided Bridge Allocation](figures/png/figure3_pruning_bridge_allocation.png)## 9. Conclusion
 
 Bridge Neural Networks represent a novel approach to integrating external knowledge into language models without the limitations of traditional retrieval-augmented generation. By repurposing a small subset of neurons to create dedicated neural pathways for knowledge access, BNNs maintain the model's reasoning capabilities while enabling selective and efficient access to vast external knowledge sources.
 
 Our theoretical analysis suggests that BNNs offer significant advantages in terms of context efficiency, integration quality, and computational performance. The proposed architecture and training methodology provide a foundation for empirical validation in future work.
 
-BNNs point towards a future where language models can seamlessly leverage both parametric and non-parametric knowledge, combining the reasoning capabilities of neural networks with the accuracy and timeliness of external information sources.
-
-## References
+BNNs point towards a future where language models can seamlessly leverage both parametric and non-parametric knowledge, combining the reasoning capabilities of neural networks with the accuracy and timeliness of external information sources.## References
 
 [1] Brown, T. B., Mann, B., Ryder, N., Subbiah, M., et al. (2020). Language models are few-shot learners. Advances in Neural Information Processing Systems, 33.
 
@@ -436,3 +432,33 @@ BNNs point towards a future where language models can seamlessly leverage both p
 [14] Weston, J., Chopra, S., & Bordes, A. (2014). Memory networks. arXiv preprint arXiv:1410.3916.
 
 [15] Sporns, O., & Betzel, R. F. (2016). Modular brain networks. Annual review of psychology, 67, 613-640.
+
+[16] Gao, Y., Xiong, Y., Gao, X., Jia, K., Pan, J., Bi, Y., ... & Wang, H. (2023). Retrieval-augmented generation for large language models: A survey. arXiv preprint arXiv:2312.10997.
+
+[17] Frankle, J., & Carbin, M. (2018). The lottery ticket hypothesis: Finding sparse, trainable neural networks. Proceedings of ICLR.
+
+[18] LeCun, Y., Denker, J. S., & Solla, S. A. (1990). Optimal brain damage. Advances in neural information processing systems, 2.
+
+[19] Louizos, C., Welling, M., & Kingma, D. P. (2017). Learning sparse neural networks through L_0 regularization. arXiv preprint arXiv:1712.01312.
+
+[20] Schuster, T., Fisch, A., Gupta, J., Dehghani, M., Bahri, D., Tran, V. Q., ... & Roberts, D. A. (2022). Confident adaptive language modeling. Advances in Neural Information Processing Systems, 35.
+
+[21] Sukhbaatar, S., Grave, E., Lample, G., Jégou, H., & Joulin, A. (2019). Augmenting self-attention with persistent memory. arXiv preprint arXiv:1907.01470.
+
+[22] Borgeaud, S., Mensch, A., Hoffmann, J., Cai, T., Rutherford, E., Millican, K., ... & Sifre, L. (2022). Improving language models by retrieving from trillions of tokens. Proceedings of ICML.
+
+[23] Mialon, G., Dessì, R., Lomeli, M., Nalmpantis, C., Pasunuru, R., Raileanu, R., ... & Scialom, T. (2023). Augmented language models: a survey. arXiv preprint arXiv:2302.07842.
+
+[24] Geva, M., Schuster, R., Berant, J., & Levy, O. (2021). Transformer feed-forward layers are key-value memories. Proceedings of EMNLP.
+
+[25] Dai, Z., Yang, Z., Yang, Y., Carbonell, J., Le, Q. V., & Salakhutdinov, R. (2019). Transformer-XL: Attentive language models beyond a fixed-length context. Proceedings of ACL.
+
+[26] Press, O., Smith, N. A., & Lewis, M. (2021). Train short, test long: Attention with linear biases enables input length extrapolation. arXiv preprint arXiv:2108.12409.
+
+[27] Asai, A., Wu, Z., Wang, Y., Sil, A., & Hajishirzi, H. (2023). Self-RAG: Learning to retrieve, generate, and critique through self-reflection. arXiv preprint arXiv:2310.11511.
+
+[28] Zhao, S., Peng, H., Chen, Y., Zheng, B., Wang, Q., Zhang, W., ... & Zhou, M. (2024). Retrieval-augmented generation with rich understanding: Towards interpretability and controllability. arXiv preprint arXiv:2409.14924.
+
+[29] Gu, J. C., Tao, C., Zhao, J., Lu, H., Hou, P., & Yan, R. (2024). Corrective retrieval augmented generation. arXiv preprint arXiv:2401.15884.
+
+[30] Fan, W., Ding, Y., Ning, L., Wang, S., Li, H., Yin, D., ... & Liu, Q. (2024). A survey on RAG meeting LLMs: Towards retrieval-augmented large language models. arXiv preprint arXiv:2405.06211.

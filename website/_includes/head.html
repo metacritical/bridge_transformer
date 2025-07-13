@@ -1,15 +1,29 @@
-<!DOCTYPE html>
-<html lang="{{ site.lang | default: "en" }}">
-  <head>
-    <!-- ...existing code... -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ site.baseurl }}/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ site.baseurl }}/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ site.baseurl }}/favicon/favicon-16x16.png">
-    <link rel="manifest" href="{{ site.baseurl }}/favicon/site.webmanifest">
-    <meta name="theme-color" content="#ffffff">
-    <link rel="shortcut icon" href="{{ site.baseurl }}/favicon/favicon.ico">
-    <!-- Optionally add other favicon sizes if needed -->
-    <!-- ...existing code... -->
-  </head>
-  <body>
-    <!-- ...existing code...
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- seo -%}
+  <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ site.baseurl }}/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ site.baseurl }}/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ site.baseurl }}/favicon/favicon-16x16.png">
+  <link rel="manifest" href="{{ site.baseurl }}/favicon/site.webmanifest">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="shortcut icon" href="{{ site.baseurl }}/favicon/favicon.ico">
+  {%- feed_meta -%}
+  {%- if jekyll.environment == 'production' and site.google_analytics -%}
+    {%- include google-analytics.html -%}
+  {%- endif -%}
+  
+  <!-- MathJax Configuration -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        displayMath: [['$$','$$'], ['\\[','\\]']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      CommonHTML: { scale: 90 }
+    });
+  </script>
+  <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>

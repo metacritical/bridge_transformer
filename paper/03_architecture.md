@@ -14,7 +14,7 @@ These components work together to create a seamless flow from language generatio
 
 ### 3.2 Bridge Detector Neurons
 
-The bridge detector mechanism is the core innovation of our approach. We repurpose a small subset (typically 3-5%) of neurons in specific transformer layers to serve as bridge detectors.
+The bridge detector mechanism is the core innovation of our approach. We repurpose a small subset (typically 3-5%) of neurons in specific transformer layers to serve as bridge detectors. This builds on insights that transformer feed-forward layers naturally function as key-value memories [24], suggesting that neurons already encode knowledge boundaries.
 
 Formally, given a transformer with hidden dimension $h$ and layer $l$, we select a subset of neurons $B_l \subset \{1, 2, ..., h\}$ to serve as bridge neurons. The activations of these neurons, denoted $a_{B_l}$, are monitored during the forward pass.
 

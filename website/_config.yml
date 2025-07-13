@@ -11,7 +11,7 @@ website: https://zendiffusion.art
 theme: minima
 show_excerpts: true
 permalink: /:title/
-baseurl: ""  # set your base URL, e.g., "/bridge_transformer" if necessary
+# baseurl: "/bridge_transformer"  # GitHub Pages repository path - commented for local dev
 
 # Suppress SASS deprecation warnings
 sass:

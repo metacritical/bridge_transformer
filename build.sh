@@ -21,7 +21,6 @@ show_usage() {
   echo "  website          Build academic website (default behavior)"
   echo "  website build    Build Jekyll website only"
   echo "  website serve    Serve Jekyll website (builds first if needed)"
-  echo "  latex            Generate academic PDF using the LaTeX template"
   echo "  all              Generate all formats"
   echo "  help             Show this help message"
   echo ""
@@ -88,7 +87,7 @@ $body$
 EOF
 
   # Generate HTML with custom template
-  pandoc markdown/bridge_neural_networks.md \
+  pandoc paper/complete_paper.md \
     --from markdown \
     --to html \
     --output output/bridge_neural_networks.html \
@@ -131,7 +130,7 @@ EOF
   
   # Generate PDF directly from markdown using pandoc with default template
   echo "Attempting PDF generation with LaTeX..."
-  pandoc markdown/bridge_neural_networks.md \
+  pandoc paper/complete_paper.md \
     --from markdown \
     --to pdf \
     --output output/bridge_neural_networks_md.pdf \
@@ -225,54 +224,6 @@ serve_website() {
   bundle exec jekyll serve --port 4000 --host 0.0.0.0
 }
 
-# Generate LaTeX PDF
-generate_latex_pdf() {
-  echo "Generating LaTeX PDF..."
-  
-  # Create tau-class directory if it doesn't exist
-  mkdir -p latex/tau-class
-  
-  # Check if LaTeX files exist, if not create them
-  if [ ! -f "latex/tau-class/tau.cls" ]; then
-    echo "Creating LaTeX template files..."
-    # Extract template files or create them
-    ./setup_latex_template.sh
-  fi
-  
-  # Convert SVG figures to PDF for LaTeX
-  chmod +x convert_figures.sh
-  ./convert_figures.sh
-  
-  # Check if pdflatex is installed
-  if ! check_command pdflatex; then
-    echo "Please install LaTeX: https://www.latex-project.org/get/"
-    return 1
-  fi
-  
-  # Create output directory if it doesn't exist
-  mkdir -p output
-  
-  # Navigate to LaTeX directory
-  cd latex
-  
-  # Generate PDF
-  pdflatex bridge_paper.tex
-  bibtex bridge_paper
-  pdflatex bridge_paper.tex
-  pdflatex bridge_paper.tex
-  
-  # Check if PDF was created
-  if [ -f "bridge_paper.pdf" ]; then
-    # Move PDF to output directory
-    mv bridge_paper.pdf ../output/bridge_paper.pdf
-    echo "✅ LaTeX PDF generated successfully: output/bridge_paper.pdf"
-  else
-    echo "❌ Failed to generate LaTeX PDF."
-  fi
-  
-  # Return to original directory
-  cd ..
-}
 
 # Main script execution
 if [ $# -eq 0 ]; then
@@ -297,17 +248,11 @@ case "$1" in
       build_website
     fi
     ;;
-  latex)
-    # Convert SVG to PNG for LaTeX builds
-    convert_svg_to_png
-    generate_latex_pdf
-    ;;
   all)
     # Convert once for all builds
     convert_svg_to_png
     generate_markdown_pdf
     build_website
-    generate_latex_pdf
     ;;
   help)
     show_usage
@@ -320,3 +265,112 @@ case "$1" in
 esac
 
 exit 0
+Serving academic website...
+📁 Copying figures to website assets...
+✓ Alchemist development environment activated!
+✓ The 'alc' command is now available in this terminal session.
+✓ When you're done, you can deactivate by closing this terminal or running:
+  - unset ALCHEMIST_ROOT
+  - Remove Alchemist paths from PATH and EMACSLOADPATH
+Starting local server...
+🌐 Website will be available at: http://localhost:4000
+Press Ctrl+C to stop the server
+Configuration file: /Users/pankajdoharey/Development/Projects/ML/bridge_transformer/website/_config.yml
+            Source: /Users/pankajdoharey/Development/Projects/ML/bridge_transformer/website
+       Destination: /Users/pankajdoharey/Development/Projects/ML/bridge_transformer/website/_site
+ Incremental build: disabled. Enable with --incremental
+      Generating... 
+       Jekyll Feed: Generating feed for posts
+                    done in 0.083 seconds.
+ Auto-regeneration: enabled for '/Users/pankajdoharey/Development/Projects/ML/bridge_transformer/website'
+    Server address: http://0.0.0.0:4000/bridge_transformer/
+  Server running... press ctrl-c to stop.
+      Regenerating: 5 file(s) changed at 2025-07-13 06:21:09
+                    assets/images/figure3_pruning_bridge_allocation.png
+                    assets/images/figure2_information_flow_comparison.png
+                    assets/images/figure4_mathematical_framework.png
+                    assets/images/figure5_training_curriculum.png
+                    assets/images/figure1_bridge_architecture.png
+       Jekyll Feed: Generating feed for posts
+                    ...done in 0.096998 seconds.
+                    
+      Regenerating: 5 file(s) changed at 2025-07-13 06:21:13
+                    assets/images/figure3_pruning_bridge_allocation.png
+                    assets/images/figure2_information_flow_comparison.png
+                    assets/images/figure4_mathematical_framework.png
+                    assets/images/figure5_training_curriculum.png
+                    assets/images/figure1_bridge_architecture.png
+       Jekyll Feed: Generating feed for posts
+                    ...done in 0.052433 seconds.
+                    
+[2025-07-13 06:21:14] ERROR '/' not found.
+[2025-07-13 06:21:16] ERROR '/' not found.
+      Regenerating: 5 file(s) changed at 2025-07-13 06:21:19
+                    assets/images/figure3_pruning_bridge_allocation.png
+                    assets/images/figure2_information_flow_comparison.png
+                    assets/images/figure4_mathematical_framework.png
+                    assets/images/figure5_training_curriculum.png
+                    assets/images/figure1_bridge_architecture.png
+       Jekyll Feed: Generating feed for posts
+                    ...done in 0.021662 seconds.
+                    
+      Regenerating: 5 file(s) changed at 2025-07-13 06:21:22
+                    assets/images/figure3_pruning_bridge_allocation.png
+                    assets/images/figure2_information_flow_comparison.png
+                    assets/images/figure4_mathematical_framework.png
+                    assets/images/figure5_training_curriculum.png
+                    assets/images/figure1_bridge_architecture.png
+       Jekyll Feed: Generating feed for posts
+                    ...done in 0.022297 seconds.
+                    
+      Regenerating: 5 file(s) changed at 2025-07-13 06:21:28
+                    assets/images/figure3_pruning_bridge_allocation.png
+                    assets/images/figure2_information_flow_comparison.png
+                    assets/images/figure4_mathematical_framework.png
+                    assets/images/figure5_training_curriculum.png
+                    assets/images/figure1_bridge_architecture.png
+       Jekyll Feed: Generating feed for posts
+                    ...done in 0.017405 seconds.
+                    
+      Regenerating: 5 file(s) changed at 2025-07-13 06:23:13
+                    assets/images/figure3_pruning_bridge_allocation.png
+                    assets/images/figure2_information_flow_comparison.png
+                    assets/images/figure4_mathematical_framework.png
+                    assets/images/figure5_training_curriculum.png
+                    assets/images/figure1_bridge_architecture.png
+       Jekyll Feed: Generating feed for posts
+                    ...done in 0.067192 seconds.
+                    
+      Regenerating: 5 file(s) changed at 2025-07-13 06:23:17
+                    assets/images/figure3_pruning_bridge_allocation.png
+                    assets/images/figure2_information_flow_comparison.png
+                    assets/images/figure4_mathematical_framework.png
+                    assets/images/figure5_training_curriculum.png
+                    assets/images/figure1_bridge_architecture.png
+       Jekyll Feed: Generating feed for posts
+                    ...done in 0.022186 seconds.
+                    
+[2025-07-13 06:23:20] ERROR '/' not found.
+[2025-07-13 06:23:22] ERROR '/' not found.
+[2025-07-13 06:24:17] ERROR '/' not found.
+      Regenerating: 5 file(s) changed at 2025-07-13 06:24:28
+                    assets/images/figure3_pruning_bridge_allocation.png
+                    assets/images/figure2_information_flow_comparison.png
+                    assets/images/figure4_mathematical_framework.png
+                    assets/images/figure5_training_curriculum.png
+                    assets/images/figure1_bridge_architecture.png
+       Jekyll Feed: Generating feed for posts
+                    ...done in 0.064877 seconds.
+                    
+[2025-07-13 06:24:29] ERROR '/' not found.
+      Regenerating: 5 file(s) changed at 2025-07-13 06:25:25
+                    assets/images/figure3_pruning_bridge_allocation.png
+                    assets/images/figure2_information_flow_comparison.png
+                    assets/images/figure4_mathematical_framework.png
+                    assets/images/figure5_training_curriculum.png
+                    assets/images/figure1_bridge_architecture.png
+       Jekyll Feed: Generating feed for posts
+                    ...done in 0.062972 seconds.
+                    
+[2025-07-13 06:25:54] ERROR '/' not found.
+jekyll 4.4.1 | Error:  Input/output error @ io_writev - <STDERR>

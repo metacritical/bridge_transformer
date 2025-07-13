@@ -1,10 +1,7 @@
 ---
 layout: page
-title: Bridge Neural Networks
-description: Direct Neural Pathways for External Knowledge Integration
----
----
 title: "Bridge Neural Networks for External Knowledge Integration"
+description: "Direct Neural Pathways for External Knowledge Integration"
 author: "Pankaj Doharey"
 contact: "pankaj@zendiffusion.art"
 institute: "ZenDiffusion.art"
@@ -73,7 +70,7 @@ The Bridge Neural Network architecture consists of four key components:
 
 These components work together to create a seamless flow from language generation to knowledge retrieval and back to generation, without disrupting the context window.
 
-![Bridge Neural Network Architecture](/assets/images/png/figure1_bridge_architecture.png)
+![Bridge Neural Network Architecture]({{ "assets/images/figure1_bridge_architecture.png" | relative_url }})
 
 *Figure 1: Bridge Neural Network Architecture showing the base transformer model with bridge neurons and external knowledge service connections.*
 
@@ -130,7 +127,7 @@ The resulting integration vector is added to the hidden states at strategic posi
 
 This direct neural integration differs fundamentally from RAG approaches that inject retrieved text into the context window. It preserves the model's reasoning capacity while enriching it with external knowledge exactly where needed.
 
-![Information Flow Comparison](/assets/images/png/figure2_information_flow_comparison.png)
+![Information Flow Comparison]({{ "assets/images/figure2_information_flow_comparison.png" | relative_url }})
 
 *Figure 2: Comparison of information flow in traditional RAG (left) versus Bridge Neural Networks (right). The key differences are context pollution vs. neural pathways, constant retrieval vs. selective activation, and text injection vs. neural integration.*
 
@@ -211,7 +208,7 @@ $$|B|^* = \frac{1}{\beta}(\frac{\alpha\beta}{\lambda} - 1)$$
 
 Our initial experiments suggest that $\alpha\beta/\lambda \approx 1.05$, yielding an optimal bridge allocation of approximately 3-5% of neurons in any given layer, with variance depending on the layer's position in the network.
 
-![Mathematical Framework](/assets/images/png/figure4_mathematical_framework.png)
+![Mathematical Framework]({{ "assets/images/figure4_mathematical_framework.png" | relative_url }})
 
 *Figure 3: Mathematical Framework for Bridge Neural Networks, showing modified transformer equations, bridge activation functions, information theoretic perspective, and capacity analysis.*
 
@@ -230,7 +227,7 @@ We propose a curriculum-based training approach with four progressive phases:
 
 This phased approach allows the model to progressively learn the complex task of knowledge integration.
 
-![Training Curriculum](/assets/images/png/figure5_training_curriculum.png)
+![Training Curriculum]({{ "assets/images/figure5_training_curriculum.png" | relative_url }})
 
 *Figure 4: Bridge Neural Network Training Curriculum showing the four phases of training, each with specific loss functions and metrics.*
 
@@ -265,7 +262,7 @@ where $A \in \mathbb{R}^{d \times r}$ and $B \in \mathbb{R}^{r \times d}$ with r
 
 Rather than arbitrarily selecting neurons for bridge functionality, Pruning-Guided Bridge Allocation (PGBA) uses network pruning techniques to identify neurons that can be repurposed with minimal impact on the model's core capabilities.
 
-![Pruning-Guided Bridge Allocation](/assets/images/png/figure3_pruning_bridge_allocation.png)
+![Pruning-Guided Bridge Allocation]({{ "assets/images/figure3_pruning_bridge_allocation.png" | relative_url }})
 
 *Figure 5: Pruning-Guided Bridge Allocation process: First, identify low-importance neurons through pruning analysis. Then, repurpose them as bridge neurons for external knowledge access.*
 

@@ -17,7 +17,7 @@
 
 #### Future Work Direction
 
-A promising direction for future research is what we term "Pruning-Guided Bridge Allocation" (PGBA). Rather than arbitrarily selecting neurons for bridge functionality, PGBA uses network pruning techniques to identify neurons that can be repurposed with minimal impact on the model's core capabilities.
+A promising direction for future research is what we term "Pruning-Guided Bridge Allocation" (PGBA). Rather than arbitrarily selecting neurons for bridge functionality, PGBA uses network pruning techniques [17, 18, 19] to identify neurons that can be repurposed with minimal impact on the model's core capabilities.
 
 The mathematical formulation for PGBA involves:
 
